@@ -13,7 +13,7 @@ import (
 	"github.com/creack/pty"
 )
 
-var ansiRegex = regexp.MustCompile(`\x1b\[[0-9;]*[a-zA-Z]|\x1b\](?:[^\x07\x1b]*)(?:\x07|\x1b\\)|[\x00-\x08\x0b\x0c\x0e-\x1f]`)
+var ansiRegex = regexp.MustCompile(`\x1b\[[?=0-9;]*[a-zA-Z]|\x1b\](?:[^\x07\x1b]*)(?:\x07|\x1b\\)|[\x00-\x08\x0b\x0c\x0e-\x1f]`)
 
 func stripAnsi(s string) string {
 	return ansiRegex.ReplaceAllString(s, "")
@@ -24,7 +24,6 @@ func main() {
 	w := a.NewWindow("goterm")
 
 	ui := widget.NewTextGrid()
-	ui.SetText("You are now using goterm")
 
 	c := exec.Command("/bin/bash")
 	p, err := pty.Start(c)
